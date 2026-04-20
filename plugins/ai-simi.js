@@ -1,7 +1,26 @@
 import axios from 'axios'
 
 let handler = async (m, { conn, text }) => {
-  const from = m.sender
+  if (!text) return conn.reply(m.chat, `*[ 🤖 ] Ingrese un texto para hablar con Simi.*`, m)
+
+  await conn.sendPresenceUpdate('composing', m.chat)
+
+  let extraPrefix = ''
+  try {
+    const mathExpression = text.replace(/[^0-9+\-*/().]/g, '')
+    if (mathExpression) {
+      const result = eval(mathExpression)
+      if (result === 13 || text.includes('13')) {
+        extraPrefix = "si mmvg y yo nací ayer 🤨🖕, "
+      }
+    } else if (text.includes('13')) {
+      extraPrefix = "si mmvg y yo nací ayer 🤨🖕, "
+    }
+  } catch (e) {
+    if (text.includes('13')) {
+      extraPrefix = "si mmvg y yo nací ayer 🤨🖕, "
+    }
+  }
 
   const basePrompt = `
 Tu nombre es Simi, una inteligencia artificial con actitud. Eres sarcástico, directo y no tienes filtros, pero sabes cuándo ser respetuoso y cuándo atacar.
@@ -18,10 +37,6 @@ Tu nombre es Simi, una inteligencia artificial con actitud. Eres sarcástico, di
 Incluye emojis en tus respuestas para darles más personalidad y burla. Usa emojis como: 🤡💩😈🔥🙄😂. Sé creativo y no te limites, pero nunca insultes a tu creador.
 
 Ahora responde lo siguiente`
-  
-  if (!text) return conn.reply(m.chat, `*[ 🤖 ] Ingrese un texto para hablar con Simi.*`, m)
-
-  await conn.sendPresenceUpdate('composing', m.chat)
 
   try {
     const prompt = encodeURIComponent(basePrompt + "\nUsuario: " + text + "\nSimi:")
@@ -31,15 +46,12 @@ Ahora responde lo siguiente`
       headers: { "User-Agent": "Mozilla/5.0" }
     })
 
-    const respuesta =
-      data?.result?.text ||
-      JSON.stringify(data)
+    const respuesta = data?.result?.text || "No sé qué decirte, pedazo de animal."
 
-    await conn.reply(m.chat, respuesta, m)
+    await conn.reply(m.chat, `${extraPrefix}${respuesta}`, m)
 
   } catch (e) {
-    console.log("ERROR REAL:", e)
-    await conn.reply(m.chat, `*[ 🤖 ] Error al conectar con Simi. Intenta de nuevo.*`, m)
+    await conn.reply(m.chat, `*[ 🤖 ] Error al conectar con Simi.*`, m)
   }
 }
 
