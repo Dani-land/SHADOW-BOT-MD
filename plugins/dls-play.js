@@ -14,7 +14,7 @@ const handler = async (m, { conn, text }) => {
     let views = 0
     let thumbnail = ""
 
-    const isUrl = /^https?:\/\/\S+/i.test(url)
+    const isUrl = /^https?://S+/i.test(url)
 
     if (isUrl) {
       if (!isYouTubeUrl(url)) {
@@ -136,18 +136,8 @@ const downloadMedia = async (conn, m, url) => {
         audio: { url: fileUrl },
         mimetype: "audio/mpeg",
         fileName: `${fileTitle}.mp3`,
-        ptt: true,
-        contextInfo: {
-          forwardingScore: 999,
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: canalId,
-            newsletterName: "Tes",
-            serverMessageId: -1
-          }
-        }
-      },
-      { quoted: m }
+        ptt: true
+      }
     )
   } catch (e) {
     console.error(e)
@@ -155,7 +145,7 @@ const downloadMedia = async (conn, m, url) => {
 }
 
 const cleanName = (name) =>
-  String(name).replace(/[^\w\s._-]/gi, "").substring(0, 50)
+  String(name).replace(/[^ws._-]/gi, "").substring(0, 50)
 
 const formatViews = (views) => {
   const n = Number(views)
@@ -167,13 +157,13 @@ const formatViews = (views) => {
 }
 
 const isYouTubeUrl = (url) => {
-  return /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i.test(url)
+  return /^(https?://)?(www.)?(youtube.com|youtu.be)//i.test(url)
 }
 
 const extractVideoId = (url) => {
   const match =
-    url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})(?:[?&/]|\b)/) ||
-    url.match(/youtu\.be\/([0-9A-Za-z_-]{11})/)
+    url.match(/(?:v=|/)([0-9A-Za-z_-]{11})(?:[?&/]|\b)/) ||
+    url.match(/youtu.be/([0-9A-Za-z_-]{11})/)
   return match?.[1] || null
 }
 
