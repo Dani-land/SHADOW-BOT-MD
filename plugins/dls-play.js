@@ -84,7 +84,7 @@ const handler = async (m, { conn, text }) => {
 🐉 _Api:_ https://api-gohan.onrender.com
 
 ✧━───『 𝑺𝒉𝒂𝒅𝒐𝒘 𝑩𝒐𝒕 』───━✧
-⚡ 𝑷𝒐𝒘𝒆𝒓𝒆𝒅 𝒃𝒚 𝒀𝒐𝒔𝒖𝒆 ⚡
+⚡ 𝑷𝒐𝒘𝒆𝒓𝒆𝒅 𝒃𝒚 𝒀𝚘𝒔𝚞𝚎 ⚡
 `
 
     let thumb = fallbackThumb
@@ -117,48 +117,40 @@ const handler = async (m, { conn, text }) => {
 
 const downloadMedia = async (conn, m, url) => {
   try {
-    const canalId = "120363403739366547@newsletter" 
-
-    const sent = await conn.sendMessage(
-      m.chat,
-      { text: "🎵 Enviando audio al canal..." },
-      { quoted: m }
-    )
-
+    const canalId = "120363403739366547@newsletter"
     const apiUrl = `https://api-gohan.onrender.com/download/ytaudio?url=${encodeURIComponent(url)}`
     const r = await fetch(apiUrl)
 
-    if (!r.ok) return m.reply(`🚫 Error HTTP ${r.status}`)
+    if (!r.ok) return
 
     const data = await r.json()
 
-    if (!data?.status || !data?.result?.download_url) {
-      return m.reply("🚫 No se pudo obtener el audio.")
-    }
+    if (!data?.status || !data?.result?.download_url) return
 
     const fileUrl = data.result.download_url
     const fileTitle = cleanName(data.result.title || "audio")
 
     await conn.sendMessage(
-      canalId,
+      m.chat,
       {
         audio: { url: fileUrl },
         mimetype: "audio/mpeg",
         fileName: `${fileTitle}.mp3`,
-        ptt: true
-      }
-    )
-
-    await conn.sendMessage(
-      m.chat,
-      {
-        text: `✅ Audio enviado al canal con éxito.`,
-        edit: sent.key
-      }
+        ptt: true,
+        contextInfo: {
+          forwardingScore: 999,
+          isForwarded: true,
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: canalId,
+            newsletterName: "Tes",
+            serverMessageId: -1
+          }
+        }
+      },
+      { quoted: m }
     )
   } catch (e) {
     console.error(e)
-    await m.reply("❌ Error: " + e.message)
   }
 }
 
