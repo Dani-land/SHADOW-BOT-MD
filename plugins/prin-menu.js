@@ -120,8 +120,6 @@ ${readMore}
           title: `${botname}  organizacional`,
           body: `By ${dev}`,
           mediaType: 1,
-          sourceUrl: null,
-          thumbnailUrl: thumbMenu, 
           renderLargerThumbnail: true,
           showAdAttribution: false
         }
@@ -151,4 +149,4 @@ function clockString(ms) {
   const m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   const s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [h, m, s].map(v => v.toString().padStart(2, '0')).join(':')
-  }
+      }
