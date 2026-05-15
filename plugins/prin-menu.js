@@ -81,58 +81,63 @@ ${comandos}
 ${readMore}
   乂 *ᴘʀᴏᴛᴏᴄᴏʟᴏ ᴅᴇ ᴄᴏᴍᴀɴᴅᴏꜱ ᴅᴇ ʟᴀ ꜱᴏᴍʙʀᴀ* 乂\n`.trim()
 
-  const fkontak = {
-    key: { fromMe: false, participant: "0@s.whatsapp.net", remoteJid: "status@broadcast" },
-    message: {
-      productMessage: {
-        product: {
-          productImage: { mimetype: "image/jpeg", jpegThumbnail: await (await fetch(thumbMenu)).buffer() },
-          title: `⌗ֶㅤ𝐌𝐞𝐧𝐮 𝐝𝐞 𝐥𝐚 𝐒𝐨𝐦𝐛𝐫𝐚`,
-          description: "« Soy quien actúa en las sombras »",
-          currencyCode: "USD",
-          priceAmount1000: 0,
-          retailerId: "menu"
-        },
-        businessOwnerJid: "584242773183@s.whatsapp.net"
+    let thumbBuffer = null
+    try {
+      thumbBuffer = await (await fetch(thumbMenu)).buffer()
+    } catch {}
+
+    const fkontak = {
+      key: { fromMe: false, participant: "0@s.whatsapp.net", remoteJid: "status@broadcast" },
+      message: {
+        productMessage: {
+          product: {
+            productImage: thumbBuffer ? { mimetype: "image/jpeg", jpegThumbnail: thumbBuffer } : undefined,
+            title: `⌗ֶㅤ𝐌𝐞𝐧𝐮 𝐝𝐞 𝐥𝐚 𝐒𝐨𝐦𝐛𝐫𝐚`,
+            description: "« Soy quien actúa en las sombras »",
+            currencyCode: "USD",
+            priceAmount1000: 0,
+            retailerId: "menu"
+          },
+          businessOwnerJid: "584242773183@s.whatsapp.net"
+        }
       }
     }
-  }
 
-  await m.react('🔥')
+    await m.react('🔥')
   
-  await conn.sendMessage(m.chat, { 
-    video: { url: videoMenu },
-    caption: infoUser + menuTexto,
-    gifPlayback: true,
-    contextInfo: {
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: channelRD.id,
-        serverMessageId: '',
-        newsletterName: channelRD.name
-      },
-      externalAdReply: {
-        title: `${botname}  organizacional`,
-        body: `By ${dev}`,
-        mediaType: 1,
-        sourceUrl: null,
-        thumbnailUrl: thumbMenu, 
-        renderLargerThumbnail: true,
-        showAdAttribution: false
+    await conn.sendMessage(m.chat, { 
+      video: { url: videoMenu },
+      caption: infoUser + menuTexto,
+      gifPlayback: true,
+      contextInfo: {
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: channelRD.id,
+          serverMessageId: '',
+          newsletterName: channelRD.name
+        },
+        externalAdReply: {
+          title: `${botname}  organizacional`,
+          body: `By ${dev}`,
+          mediaType: 1,
+          sourceUrl: null,
+          thumbnailUrl: thumbMenu, 
+          renderLargerThumbnail: true,
+          showAdAttribution: false
+        }
       }
-    }
-  }, { quoted: fkontak })
+    }, { quoted: fkontak })
 
-  await conn.sendMessage(m.chat, {
-    audio: { url: "https://cdn.adoolab.xyz/dl/5fae480e.m4a" },
-    mimetype: "audio/mpeg",
-    ptt: false,
-    fileName: "menu-shadow.mp3"
-  })
+    await conn.sendMessage(m.chat, {
+      audio: { url: "https://files.catbox.moe/biplcz.m4a" },
+      mimetype: "audio/mpeg",
+      ptt: false,
+      fileName: "menu-shadow.mp3"
+    })
 
-} catch (e) {
-   await conn.sendMessage(m.chat, { text: `✘ Error: ${e.message}` })
- }
+  } catch (e) {
+    await conn.sendMessage(m.chat, { text: `✘ Error: ${e.message}` })
+  }
 }
 
 handler.help = ['menu']
@@ -146,4 +151,4 @@ function clockString(ms) {
   const m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   const s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [h, m, s].map(v => v.toString().padStart(2, '0')).join(':')
-        }
+  }
