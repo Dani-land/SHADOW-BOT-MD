@@ -43,16 +43,16 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     };
 
     await m.react('❤️');
-    await conn.reply(m.chat, '🌌 *Buscando una waifu exótica para ti...*', m, { contextInfo });
+    await conn.reply(m.chat, '🌌 *Buscando una waifu para ti...*', m, { contextInfo });
 
-    let res = await fetch('https://api.waifu.it/random');
+    let res = await fetch('https://nekos.best/api/v2/waifu');
     let json = await res.json();
 
-    if (!json?.url) throw new Error('No se pudo obtener la waifu.');
+    if (!json?.results?.length) throw new Error('No se pudo obtener la waifu.');
 
-    let url = json.url;
+    let url = json.results[0].url;
 
-    const caption = `🌌 *Aquí tienes tu waifu exótica, ${await conn.getName(m.sender)}* 👑\n\n💫 ¿Quieres otra? Solo toca el botón.`;
+    const caption = `🌌 *Aquí tienes tu waifu, ${await conn.getName(m.sender)}* 👑\n\n💫 ¿Quieres otra? Solo toca el botón.`;
 
     const buttons = [
       { buttonId: usedPrefix + command, buttonText: { displayText: '🔁 Siguiente waifu' }, type: 1 }
