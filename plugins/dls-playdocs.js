@@ -88,16 +88,16 @@ const downloadMedia = async (conn, m, url, type) => {
     const sent = await conn.sendMessage(m.chat, { text: msg }, { quoted: m })
 
     const apiUrl = type === "mp3"
-      ? `https://apiaxi.i11.eu/down/ytaudio?url=${encodeURIComponent(url)}`
-      : `https://apiaxi.i11.eu/down/ytvideo?url=${encodeURIComponent(url)}`
+      ? `https://api-gohan.onrender.com/download/ytaudio?url=${encodeURIComponent(url)}`
+      : `https://api-gohan.onrender.com/download/ytvideo?url=${encodeURIComponent(url)}`
 
     const r = await fetch(apiUrl)
     const data = await r.json()
 
-    if (!data?.status || !data?.resultado?.url_dl) return m.reply("🚫 No se pudo descargar el archivo.")
+    if (!data?.result?.download_url) return m.reply("🚫 No se pudo descargar el archivo.")
 
-    const fileUrl = data.resultado.url_dl
-    const fileTitle = cleanName(data.resultado.titulo || "Shadow_File")
+    const fileUrl = data.result.download_url
+    const fileTitle = cleanName(data.result.title || "Shadow_File")
 
     const audioThumb = await fetch("https://files.catbox.moe/wfd0ze.jpg")
     const mini = Buffer.from(await audioThumb.arrayBuffer())
@@ -134,7 +134,6 @@ const downloadMedia = async (conn, m, url, type) => {
     )
 
   } catch (e) {
-    console.error(e)
     m.reply("❌ Error: " + e.message)
   }
 }
