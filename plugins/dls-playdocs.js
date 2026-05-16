@@ -30,7 +30,7 @@ const handler = async (m, { conn, text, command }) => {
     const isVideo = command.includes('mp4')
     const type = isVideo ? "mp4" : "mp3"
 
-    const res3 = await fetch("https://files.catbox.moe/wfd0ze.jpg")
+    const res3 = await fetch("https://i.ibb.co/7twWLLSw/ecba6992f3b1.jpg")
     const thumb3 = Buffer.from(await res3.arrayBuffer())
 
     const fkontak = {
