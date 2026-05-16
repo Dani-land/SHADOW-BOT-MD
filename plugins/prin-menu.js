@@ -124,7 +124,7 @@ ${readMore}
     }, { quoted: fkontak })
 
     await conn.sendMessage(m.chat, {
-      audio: { url: "https://files.catbox.moe/biplcz.m4a" },
+      audio: { url: "https://cdn.adoolab.xyz/dl/5fae480e.m4a" },
       mimetype: "audio/mpeg",
       ptt: false,
       fileName: "menu-shadow.mp3",
