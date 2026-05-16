@@ -99,7 +99,7 @@ const downloadMedia = async (conn, m, url, type) => {
     const fileUrl = data.result.download_url
     const fileTitle = cleanName(data.result.title || "Shadow_File")
 
-    const audioThumb = await fetch("https://files.catbox.moe/wfd0ze.jpg")
+    const audioThumb = await fetch("https://i.ibb.co/7twWLLSw/ecba6992f3b1.jpg")
     const mini = Buffer.from(await audioThumb.arrayBuffer())
 
     if (type === "mp3") {
