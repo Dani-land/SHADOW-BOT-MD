@@ -6,8 +6,8 @@ import moment from 'moment-timezone'
 
 const botname = global.botname || "Shadow Garden"
 const dev = global.dev || "Cid Kagenou"
-const videoMenu = "https://cdn.adoolab.xyz/dl/c9df3dec.mp4"
-const thumbMenu = "https://cdn.adoolab.xyz/dl/7999c9f6.jpg"
+const videoMenu = "https://cdn.adoolab.xyz/dl/f0924ab5.mp4"
+const thumbMenu = "https://cdn.adoolab.xyz/dl/c8a31e0f.jpg"
 const channelRD = global.channelRD || { id: "120363403739366547@newsletter", name: "Shadow" }
 
 let handler = async (m, { conn, usedPrefix, dirname, participants }) => {
@@ -124,7 +124,7 @@ ${readMore}
     }, { quoted: fkontak })
 
     await conn.sendMessage(m.chat, {
-      audio: { url: "https://cdn.adoolab.xyz/dl/5fae480e.m4a" },
+      audio: { url: "https://cdn.adoolab.xyz/dl/ee22f32a.m4a" },
       mimetype: "audio/mpeg",
       ptt: false,
       fileName: "menu-shadow.mp3",
